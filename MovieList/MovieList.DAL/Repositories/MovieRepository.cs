@@ -52,5 +52,25 @@ namespace MovieList.DAL.Repositories
 
             return newMovie.Id;
         }
+
+        /// <summary>
+        /// Uppfærir gildi myndar með gefið raðnúmer.
+        /// </summary>
+        /// <param name="id">Raðnúmer myndar.</param>
+        /// <param name="movie">Uppfærðar upplýsingar myndar.</param>
+        /// <returns>True / false, eftir því hvort breyting tókst.</returns>
+        public bool Update(int id, MovieDTO movie)
+        {
+            var movieToBeChanged = Context.Movies.Find(id);
+
+            if(movieToBeChanged == null)
+            {
+                return false;
+            }
+
+            movieToBeChanged.Name = movie.Name;
+            Context.SaveChanges();
+            return true;
+        }
     }
 }

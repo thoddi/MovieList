@@ -56,5 +56,18 @@ namespace MovieList.Controllers
         {
             return Uow.Movies.Insert(movie);
         }
+
+        /// <summary>
+        /// Uppfærir gildi myndar með gefið raðnúmer.
+        /// </summary>
+        /// <param name="id">Raðnúmer myndar.</param>
+        /// <param name="movie">Uppfærðar upplýsingar myndar.</param>
+        /// <returns>True / false, eftir því hvort breyting tókst.</returns>
+        [HttpPut]
+        [Route("{id}")]
+        public bool Update(int id, MovieDTO movie)
+        {
+            return Uow.Movies.Update(id, movie);
+        }
     }
 }
