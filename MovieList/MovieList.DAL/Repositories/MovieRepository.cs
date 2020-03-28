@@ -34,6 +34,7 @@ namespace MovieList.DAL.Repositories
         {
             var movie = Context.Movies.Where(x => x.Id == id).FirstOrDefault();
 
+            // Köstum villu ef mynd finnst ekki.
             if(movie == null)
             {
                 throw new MovieException("Engin mynd með gefið raðnúmer!");
@@ -69,7 +70,8 @@ namespace MovieList.DAL.Repositories
         {
             var movieToBeChanged = Context.Movies.Find(id);
 
-            if(movieToBeChanged == null)
+            // Köstum villu ef mynd finnst ekki.
+            if (movieToBeChanged == null)
             {
                 throw new MovieException("Engin mynd með gefið raðnúmer!");
             }
@@ -87,7 +89,8 @@ namespace MovieList.DAL.Repositories
         {
             var movieToDelete = Context.Movies.Find(id);
 
-            if(movieToDelete == null)
+            // Köstum villu ef mynd finnst ekki.
+            if (movieToDelete == null)
             {
                 throw new MovieException("Engin mynd með gefið raðnúmer!");
             }

@@ -24,12 +24,21 @@ namespace MovieList.Models
 
         public Response() { }
 
+        /// <summary>
+        /// Býr til jákvætt Response.
+        /// </summary>
+        /// <param name="message">Almenn skilaboð frá aðgerð.</param>
         public Response(string message)
         {
             Success = true;
             Message = message;
         }
 
+        /// <summary>
+        /// Býr til neikvætt Response.
+        /// </summary>
+        /// <param name="message">Almenn skilaboð frá aðgerð.</param>
+        /// <param name="error">Villulýsing</param>
         public Response(string message, string error)
         {
             Success = false;
@@ -42,11 +51,21 @@ namespace MovieList.Models
     {
         public T Item { get; set; }
 
+        /// <summary>
+        /// Býr til jákvætt Response.
+        /// </summary>
+        /// <param name="message">Almenn skilaboð frá aðgerð.</param>
+        /// <param name="item">Villulýsing</param>
         public Response(string message, T item) : base(message)
         {
             Item = item;
         }
 
+        /// <summary>
+        /// Býr til neikvætt Response.
+        /// </summary>
+        /// <param name="message">Almenn skilaboð frá aðgerð.</param>
+        /// <param name="error">Villulýsing</param>
         public Response(string message, string error) : base(message, error) { }
     }
 }

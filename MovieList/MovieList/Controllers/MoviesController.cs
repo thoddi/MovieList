@@ -101,6 +101,7 @@ namespace MovieList.Controllers
             {
                 if(Uow.Movies.Update(id, movie))
                 {
+                    Uow.Save();
                     return new Response("Mynd uppfærð!");
                 }
                 return new Response("Ekki tókst að uppfæra mynd.", "Óskilgreind villa!");
@@ -128,6 +129,7 @@ namespace MovieList.Controllers
             {
                 if (Uow.Movies.Delete(id))
                 {
+                    Uow.Save();
                     return new Response("Mynd eytt!");
                 }
                 return new Response("Ekki tókst að eyða mynd.", "Óskilgreind villa!");
