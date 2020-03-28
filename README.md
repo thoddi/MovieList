@@ -1,6 +1,8 @@
 # MovieList
 
 Þessi vefþjónn leyfir þér að bæta við myndum í gagnagrunn, skoða, uppfæra og eyða. 
+Hægt að er skoða tilheyrandi api köll á slóðinni /swagger.
+Hægt er að skoða verkefnið lifandi á https://movielist20200328185851.azurewebsites.net
 
 # Vinna
 
