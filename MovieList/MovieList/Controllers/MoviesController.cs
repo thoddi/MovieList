@@ -45,5 +45,16 @@ namespace MovieList.Controllers
         {
             return Uow.Movies.GetById(id);
         }
+
+        /// <summary>
+        /// Bætir mynd við gagnagrunninn.
+        /// </summary>
+        /// <param name="movie">Mynd til að bæta við.</param>
+        /// <returns>Raðnúmer nýrrar færslu.</returns>
+        [HttpPost]
+        public int Insert(MovieDTO movie)
+        {
+            return Uow.Movies.Insert(movie);
+        }
     }
 }

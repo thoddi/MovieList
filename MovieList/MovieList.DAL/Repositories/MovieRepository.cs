@@ -22,21 +22,7 @@ namespace MovieList.DAL.Repositories
         /// <returns>Lista af myndum.</returns>
         public List<Movie> Get()
         {
-            //return Context.Movies.ToList();
-
-            return new List<Movie>
-            {
-                new Movie
-                {
-                    Id = 1,
-                    Name = "Click"
-                },
-                new Movie
-                {
-                    Id = 2,
-                    Name = "Toy Story"
-                }
-            };
+            return Context.Movies.ToList();
         }
 
         /// <summary>
@@ -46,9 +32,25 @@ namespace MovieList.DAL.Repositories
         /// <returns>Upplýsingar myndar.</returns>
         public Movie GetById(int id)
         {
-            var list = Get();
+            return Context.Movies.Where(x => x.Id == id).FirstOrDefault();
+        }
 
-            return list.Where(x => x.Id == id).FirstOrDefault();
+        /// <summary>
+        /// Bætir mynd við gagnagrunninn.
+        /// </summary>
+        /// <param name="movie">Mynd til að bæta við.</param>
+        /// <returns>Raðnúmer nýrrar færslu.</returns>
+        public int Insert(MovieDTO movie)
+        {
+            var newMovie = new Movie
+            {
+                Name = movie.Name
+            };
+
+            Context.Movies.Add(newMovie);
+            Context.SaveChanges();
+
+            return newMovie.Id;
         }
     }
 }

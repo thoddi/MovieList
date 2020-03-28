@@ -4,9 +4,13 @@ using System.Text;
 
 namespace MovieList.DAL.Models
 {
-    public class Movie
+    public class Movie : MovieDTO
     {
         public int Id { get; set; }
+    }
+
+    public class MovieDTO
+    {
         public string Name { get; set; }
     }
 }
