@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MovieList.DAL;
 using MovieList.DAL.Models;
+using MovieList.Models;
 
 namespace MovieList.Controllers
 {
@@ -29,9 +30,17 @@ namespace MovieList.Controllers
         /// </summary>
         /// <returns>Lista af myndum.</returns>
         [HttpGet]
-        public IEnumerable<Movie> Get()
+        public Response<IEnumerable<Movie>> Get()
         {
-            return Uow.Movies.Get();
+            try
+            {
+                var movies = Uow.Movies.Get();
+                return new Response<IEnumerable<Movie>>("Myndir sóttar", movies);
+            }
+            catch(Exception)
+            {
+                return new Response<IEnumerable<Movie>>("Ekki tókst að sækja myndir", "Óskilgreind villa!");
+            }
         }
 
         /// <summary>
@@ -41,9 +50,21 @@ namespace MovieList.Controllers
         /// <returns>Upplýsingar myndar.</returns>
         [HttpGet]
         [Route("{id}")]
-        public Movie GetById(int id)
+        public Response<Movie> GetById(int id)
         {
-            return Uow.Movies.GetById(id);
+            try
+            {
+                var movie = Uow.Movies.GetById(id);
+                return new Response<Movie>("Mynd fannst.", movie);
+            }
+            catch(MovieException e)
+            {
+                return new Response<Movie>("Ekki tókst að sækja mynd.", e.Message);
+            }
+            catch (Exception)
+            {
+                return new Response<Movie>("Ekki tókst að sækja mynd", "Óskilgreind villa!");
+            }
         }
 
         /// <summary>
@@ -52,9 +73,18 @@ namespace MovieList.Controllers
         /// <param name="movie">Mynd til að bæta við.</param>
         /// <returns>Raðnúmer nýrrar færslu.</returns>
         [HttpPost]
-        public int Insert(MovieDTO movie)
+        public Response<int> Insert(MovieDTO movie)
         {
-            return Uow.Movies.Insert(movie);
+            try
+            {
+                int id = Uow.Movies.Insert(movie);
+                Uow.Save();
+                return new Response<int>("Mynd hefur verið bætt við.", id);
+            }
+            catch (Exception)
+            {
+                return new Response<int>("Ekki tókst að bæta við mynd.", "Óskilgreind villa!");
+            }
         }
 
         /// <summary>
@@ -65,9 +95,24 @@ namespace MovieList.Controllers
         /// <returns>True / false, eftir því hvort breyting tókst.</returns>
         [HttpPut]
         [Route("{id}")]
-        public bool Update(int id, MovieDTO movie)
+        public Response Update(int id, MovieDTO movie)
         {
-            return Uow.Movies.Update(id, movie);
+            try
+            {
+                if(Uow.Movies.Update(id, movie))
+                {
+                    return new Response("Mynd uppfærð!");
+                }
+                return new Response("Ekki tókst að uppfæra mynd.", "Óskilgreind villa!");
+            }
+            catch (MovieException e)
+            {
+                return new Response("Ekki tókst að uppfæra mynd.", e.Message);
+            }
+            catch (Exception)
+            {
+                return new Response<Movie>("Ekki tókst að uppfæra mynd.", "Óskilgreind villa!");
+            }
         }
 
         /// <summary>
@@ -77,9 +122,24 @@ namespace MovieList.Controllers
         /// <returns>True / false, eftir því hvort eyðsla tókst.</returns>
         [HttpDelete]
         [Route("{id}")]
-        public bool Delete(int id)
+        public Response Delete(int id)
         {
-            return Uow.Movies.Delete(id);
+            try
+            {
+                if (Uow.Movies.Delete(id))
+                {
+                    return new Response("Mynd eytt!");
+                }
+                return new Response("Ekki tókst að eyða mynd.", "Óskilgreind villa!");
+            }
+            catch (MovieException e)
+            {
+                return new Response("Ekki tókst að eyða mynd.", e.Message);
+            }
+            catch (Exception)
+            {
+                return new Response<Movie>("Ekki tókst að eyða mynd.", "Óskilgreind villa!");
+            }
         }
     }
 }

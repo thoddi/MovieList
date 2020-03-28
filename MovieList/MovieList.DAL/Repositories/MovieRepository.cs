@@ -32,7 +32,14 @@ namespace MovieList.DAL.Repositories
         /// <returns>Upplýsingar myndar.</returns>
         public Movie GetById(int id)
         {
-            return Context.Movies.Where(x => x.Id == id).FirstOrDefault();
+            var movie = Context.Movies.Where(x => x.Id == id).FirstOrDefault();
+
+            if(movie == null)
+            {
+                throw new MovieException("Engin mynd með gefið raðnúmer!");
+            }
+
+            return movie;
         }
 
         /// <summary>
@@ -48,7 +55,6 @@ namespace MovieList.DAL.Repositories
             };
 
             Context.Movies.Add(newMovie);
-            Context.SaveChanges();
 
             return newMovie.Id;
         }
@@ -65,11 +71,10 @@ namespace MovieList.DAL.Repositories
 
             if(movieToBeChanged == null)
             {
-                return false;
+                throw new MovieException("Engin mynd með gefið raðnúmer!");
             }
 
             movieToBeChanged.Name = movie.Name;
-            Context.SaveChanges();
             return true;
         }
 
@@ -84,11 +89,10 @@ namespace MovieList.DAL.Repositories
 
             if(movieToDelete == null)
             {
-                return false;
+                throw new MovieException("Engin mynd með gefið raðnúmer!");
             }
 
             Context.Movies.Remove(movieToDelete);
-            Context.SaveChanges();
             return true;
         }
     }
