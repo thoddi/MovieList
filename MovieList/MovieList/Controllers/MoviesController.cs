@@ -69,5 +69,17 @@ namespace MovieList.Controllers
         {
             return Uow.Movies.Update(id, movie);
         }
+
+        /// <summary>
+        /// Eyðir mynd með gefið raðnúmer.
+        /// </summary>
+        /// <param name="id">Raðnúmer myndar.</param>
+        /// <returns>True / false, eftir því hvort eyðsla tókst.</returns>
+        [HttpDelete]
+        [Route("{id}")]
+        public bool Delete(int id)
+        {
+            return Uow.Movies.Delete(id);
+        }
     }
 }

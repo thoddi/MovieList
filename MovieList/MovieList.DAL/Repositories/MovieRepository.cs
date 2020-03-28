@@ -72,5 +72,24 @@ namespace MovieList.DAL.Repositories
             Context.SaveChanges();
             return true;
         }
+
+        /// <summary>
+        /// Eyðir mynd með gefið raðnúmer.
+        /// </summary>
+        /// <param name="id">Raðnúmer myndar.</param>
+        /// <returns>True / false, eftir því hvort eyðsla tókst.</returns>
+        public bool Delete(int id)
+        {
+            var movieToDelete = Context.Movies.Find(id);
+
+            if(movieToDelete == null)
+            {
+                return false;
+            }
+
+            Context.Movies.Remove(movieToDelete);
+            Context.SaveChanges();
+            return true;
+        }
     }
 }
