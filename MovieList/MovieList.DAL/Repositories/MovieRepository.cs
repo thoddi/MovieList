@@ -38,5 +38,17 @@ namespace MovieList.DAL.Repositories
                 }
             };
         }
+
+        /// <summary>
+        /// Skilar mynd með gefið raðnúmer.
+        /// </summary>
+        /// <param name="id">Raðnúmer myndar.</param>
+        /// <returns>Upplýsingar myndar.</returns>
+        public Movie GetById(int id)
+        {
+            var list = Get();
+
+            return list.Where(x => x.Id == id).FirstOrDefault();
+        }
     }
 }

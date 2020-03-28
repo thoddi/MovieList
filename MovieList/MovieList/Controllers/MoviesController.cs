@@ -33,5 +33,17 @@ namespace MovieList.Controllers
         {
             return Uow.Movies.Get();
         }
+
+        /// <summary>
+        /// Skilar mynd með gefið raðnúmer.
+        /// </summary>
+        /// <param name="id">Raðnúmer myndar.</param>
+        /// <returns>Upplýsingar myndar.</returns>
+        [HttpGet]
+        [Route("{id}")]
+        public Movie GetById(int id)
+        {
+            return Uow.Movies.GetById(id);
+        }
     }
 }
